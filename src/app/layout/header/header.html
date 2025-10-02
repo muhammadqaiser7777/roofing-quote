@@ -1,1 +1,34 @@
-<p>header works!</p>
+<header class="site-header" [class.scrolled]="isScrolled">
+  <div class="header-container">
+    <!-- Logo + Title -->
+    <a routerLink="/" class="logo-title" (click)="closeDropdown()">
+      <img src="assets/images/form-logo.webp" alt="Roofing Logo" class="logo" />
+      <span class="title">Roofing Quote</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-links">
+      <a routerLink="/faq" routerLinkActive="active-link" (click)="closeDropdown()">FAQ</a>
+      <a routerLink="/contact" routerLinkActive="active-link" (click)="closeDropdown()">Contact</a>
+      <a routerLink="/about" routerLinkActive="active-link" (click)="closeDropdown()">About</a>
+      <a routerLink="/policies" routerLinkActive="active-link" (click)="closeDropdown()">Policies</a>
+      <a routerLink="/form" class="quote-btn" (click)="closeDropdown()">Get Quote</a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button class="menu-toggle" (click)="toggleDropdown()" aria-label="Menu">
+      <span class="menu-icon" [class.open]="dropdownOpen"></span>
+      <span class="menu-icon" [class.open]="dropdownOpen"></span>
+      <span class="menu-icon" [class.open]="dropdownOpen"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div class="mobile-dropdown" [class.open]="dropdownOpen">
+    <a routerLink="/faq" (click)="closeDropdown()">FAQ</a>
+    <a routerLink="/contact" (click)="closeDropdown()">Contact</a>
+    <a routerLink="/about" (click)="closeDropdown()">About</a>
+    <a routerLink="/policies" (click)="closeDropdown()">Policy</a>
+    <a routerLink="/form" class="quote-btn" (click)="closeDropdown()">Get Quote</a>
+  </div>
+</header>

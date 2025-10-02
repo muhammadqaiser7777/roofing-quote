@@ -1,1 +1,236 @@
-<p>form works!</p>
+<div class="background"></div>
+<div class="form-container">
+  <form (ngSubmit)="submit()" #f="ngForm">
+  <div class="roof-form" [ngClass]="'step-' + currentStep">
+    <div class="header">
+      <img src="assets/images/form-logo.webp" alt="Form Logo" class="form-logo">
+      <h1>Get your roofing quote</h1>
+    </div>
+    <div class="questions" *ngIf="currentStep === 1">
+      <div class="question">
+        <label for="roofingType">What is your roof material?</label>
+        <select id="roofingType" [(ngModel)]="roofingType" name="roofingType" required>
+          <option value="">Select an option</option>
+          <option value="1">Asphalt Shingle Roofing</option>
+          <option value="2">Cedar Shake</option>
+          <option value="3">Install Metal Roofing</option>
+          <option value="4">Install Natural Slate Roofing</option>
+          <option value="5">Tar</option>
+          <option value="6">Commercial Roofing</option>
+          <option value="7">Install Flat, Foam, or Single Ply Roofing</option>
+          <option value="8">Install Traditional Tile Roofing</option>
+          <option value="9">Install Wood or Composite Roofing</option>
+          <option value="10">Water proof coatings</option>
+          <option value="11">Roof Removal</option>
+          <option value="12">Roof Maintenance or Cleaning</option>
+          <option value="13">Other</option>
+        </select>
+        <div class="error" *ngIf="errors['roofingType']">{{ errors['roofingType'] }}</div>
+      </div>
+      <div class="question">
+        <label for="ProjectNature">What is the nature of your project?</label>
+        <select id="ProjectNature" [(ngModel)]="ProjectNature" name="ProjectNature" required>
+          <option value="">Select an option</option>
+          <option value="1">Install / New</option>
+          <option value="2">Repair</option>
+          <option value="3">Replace / Remodelling</option>
+        </select>
+        <div class="error" *ngIf="errors['ProjectNature']">{{ errors['ProjectNature'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 2">
+      <div class="question">
+        <label for="ProjectStatus">Project Status</label>
+        <select id="ProjectStatus" [(ngModel)]="ProjectStatus" name="ProjectStatus" required>
+          <option value="">Select an option</option>
+          <option value="1">Ready to hire</option>
+          <option value="2">Planning and Budgeting</option>
+        </select>
+        <div class="error" *ngIf="errors['ProjectStatus']">{{ errors['ProjectStatus'] }}</div>
+      </div>
+      <div class="question">
+        <label for="Purchasetimeframe">Purchase Time Frame</label>
+        <select id="Purchasetimeframe" [(ngModel)]="Purchasetimeframe" name="Purchasetimeframe" required>
+          <option value="">Select an option</option>
+          <option value="1">1-2 Weeks</option>
+          <option value="2">3-4 Weeks</option>
+          <option value="3">5-6 Weeks</option>
+          <option value="4">7-8 Weeks</option>
+          <option value="5">Time is flexible</option>
+        </select>
+        <div class="error" *ngIf="errors['Purchasetimeframe']">{{ errors['Purchasetimeframe'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 3">
+      <div class="question">
+        <label for="propertyType">Property Type</label>
+        <select id="propertyType" [(ngModel)]="propertyType" name="propertyType" required>
+          <option value="">Select an option</option>
+          <option value="1">Residential</option>
+          <option value="2">Commercial</option>
+          <option value="3">Multi-unit</option>
+        </select>
+        <div class="error" *ngIf="errors['propertyType']">{{ errors['propertyType'] }}</div>
+      </div>
+      <div class="question">
+        <label for="homeOwner">Home Owner</label>
+        <select id="homeOwner" [(ngModel)]="homeOwner" name="homeOwner" required>
+          <option value="">Select an option</option>
+          <option value="1">Yes</option>
+          <option value="2">No</option>
+        </select>
+        <div class="error" *ngIf="errors['homeOwner']">{{ errors['homeOwner'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 4">
+      <div class="question">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required (keypress)="onNameKeyPress($event)">
+        <div class="error" *ngIf="errors['firstName']">{{ errors['firstName'] }}</div>
+      </div>
+      <div class="question">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required (keypress)="onNameKeyPress($event)">
+        <div class="error" *ngIf="errors['lastName']">{{ errors['lastName'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 6">
+      <div class="question">
+        <label for="state">State</label>
+        <select id="state" [(ngModel)]="state" name="state">
+          <option value="">Select a state</option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">Washington DC</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VI">Virgin Islands</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
+        <div class="error" *ngIf="errors['state']">{{ errors['state'] }}</div>
+      </div>
+      <div class="question">
+        <label for="zip">Zip Code</label>
+        <input type="text" id="zip" [(ngModel)]="zip" name="zip" maxlength="5">
+        <div class="error" *ngIf="errors['zip']">{{ errors['zip'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 5">
+      <div class="question">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" [(ngModel)]="phone" name="phone" maxlength="10" required (keypress)="onPhoneKeyPress($event)" (input)="onPhoneInput()">
+        <div class="error" *ngIf="errors['phone']">{{ errors['phone'] }}</div>
+      </div>
+      <div class="question">
+        <label for="email">Email</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+        <div class="error" *ngIf="errors['email']">{{ errors['email'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 7">
+      <div class="question">
+        <label for="city">City</label>
+        <input type="text" id="city" [(ngModel)]="city" name="city">
+        <div class="error" *ngIf="errors['city']">{{ errors['city'] }}</div>
+      </div>
+      <div class="question">
+        <label for="address">Address</label>
+        <input type="text" id="address" [(ngModel)]="address" name="address">
+        <div class="error" *ngIf="errors['address']">{{ errors['address'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 8">
+      <div class="question">
+        <label for="Timetocall">Best Time to Call</label>
+        <select id="Timetocall" [(ngModel)]="Timetocall" name="Timetocall">
+          <option value="">Select an option</option>
+          <option value="4">Anytime</option>
+          <option value="1">Morning (8AM - 12PM)</option>
+          <option value="2">Afternoon (12PM - 5PM)</option>
+          <option value="3">Evening (5PM - 8PM)</option>
+        </select>
+        <div class="error" *ngIf="errors['Timetocall']">{{ errors['Timetocall'] }}</div>
+      </div>
+      <div class="question">
+        <label for="BriefRequirement">Brief Description</label>
+        <textarea id="BriefRequirement" [(ngModel)]="BriefRequirement" name="BriefRequirement" rows="4" placeholder="Please provide a brief description of your roofing needs..."></textarea>
+        <div class="error" *ngIf="errors['BriefRequirement']">{{ errors['BriefRequirement'] }}</div>
+      </div>
+    </div>
+    <div class="questions" *ngIf="currentStep === 9">
+      <div class="question">
+        <label for="agreement" class="checkbox-label">
+          <input type="checkbox" id="agreement" [(ngModel)]="agreement" name="agreement">
+          By clicking GET YOUR QUOTE, I agree to the <a href="/policies?tab=privacy" target="_blank">Terms of Service and Privacy Policy</a>, I authorize home improvement companies, their contractors, and Partner Companies to contact me about home improvement offers by phone calls and text messages to the number I provided. I authorize that these marketing communications may be delivered to me using an automatic telephone dialing system or by prerecorded message. I understand that my consent is not a condition of purchase, and I may revoke that consent at any time. Mobile and data charges may apply. <a href="/policies?tab=company" target="_blank">California Residents</a>.
+        </label>
+        <div class="error" *ngIf="errors['agreement']">{{ errors['agreement'] }}</div>
+      </div>
+      <input type="hidden" name="ipaddress" [(ngModel)]="ipaddress">
+      <input id="leadid_token" name="universal_leadid" type="hidden">
+    </div>
+
+    <div class="error" *ngIf="errors['general']" style="text-align: center;">{{ errors['general'] }}</div>
+    <div class="buttons" [ngClass]="{'multiple': currentStep !== 1}">
+      <button *ngIf="currentStep === 1" type="button" (click)="nextStep()" class="btn-next">Next</button>
+      <button *ngIf="currentStep > 1 && currentStep < totalSteps" type="button" (click)="previousStep()" class="btn-previous">Previous</button>
+      <button *ngIf="currentStep > 1 && currentStep < totalSteps" type="button" (click)="nextStep()" class="btn-next" [disabled]="isValidatingEmail || isValidatingZip || isValidatingIP">
+        <span *ngIf="!isValidatingEmail && !isValidatingZip && !isValidatingIP">Next</span>
+        <span *ngIf="isValidatingEmail || isValidatingZip || isValidatingIP">Validating...</span>
+      </button>
+      <button *ngIf="currentStep === totalSteps" type="button" (click)="previousStep()" class="btn-previous">Previous</button>
+      <button *ngIf="currentStep === totalSteps" type="submit" class="btn-submit" [disabled]="!isUSCitizen">Submit</button>
+    </div>
+  </div>
+  </form>
+</div>
+
+
+<div *ngIf="showThankYou" class="thank-you-popup">
+  Thank you, your response has been recorded.
+</div>

@@ -1,1 +1,42 @@
-<p>faq works!</p>
+<div class="faq-container">
+  <div class="faq-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Find answers to common questions about our roofing quote service</p>
+  </div>
+
+  <div class="faq-list">
+    <div
+      class="faq-item"
+      *ngFor="let faq of faqs; let i = index"
+      [class.active]="faq.isOpen"
+    >
+      <button
+        class="faq-question"
+        (click)="toggleFaq(i)"
+        [attr.aria-expanded]="faq.isOpen"
+        [attr.aria-controls]="'faq-answer-' + i"
+      >
+        <span class="question-text">{{ faq.question }}</span>
+        <span class="toggle-icon" [class.rotated]="faq.isOpen">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+
+      <div
+        class="faq-answer"
+        [id]="'faq-answer-' + i"
+        [class.expanded]="faq.isOpen"
+      >
+        <div class="answer-content">
+          {{ faq.answer }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-footer">
+    <p>Still have questions? <a href="/contact">Contact us</a> for more information.</p>
+  </div>
+</div>

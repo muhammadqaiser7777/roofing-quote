@@ -1,0 +1,332 @@
+.form-container {
+  height: 100%;
+  display: flex;
+    margin-top: 5%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.roof-form {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  /* From https://css.glass */
+background: rgba(255, 255, 255, 0);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.9px);
+-webkit-backdrop-filter: blur(4.9px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: url('/assets/images/roofing-main.jpg');
+  background-position: center;
+}
+
+
+.questions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+select {
+  padding: 12px 40px 12px 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  outline: none;
+}
+
+input {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  outline: none;
+}
+
+textarea {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  outline: none;
+}
+
+.error {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+select::after {
+  content: '▼';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.buttons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.buttons.multiple {
+  justify-content: space-between;
+}
+
+.btn-previous, .btn-next, .btn-submit {
+  width: 120px;
+  height: 60px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgba(255, 255, 255, 0.42);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+}
+
+.btn-submit {
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: transform 0.2s;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-previous {
+  border-radius: 30px;
+}
+
+.btn-next {
+  border-radius: 30px;
+}
+@media (max-width: 768px) {
+  .roof-form {
+    width: 95vw;
+    padding: 15px;
+    margin-top: 20%;
+  }
+
+  .header {
+    margin-bottom: 15px;
+  }
+
+  .form-logo {
+    width: 80px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .btn-previous, .btn-next, .btn-submit {
+    width: 100px;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .btn-submit {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .roof-form {
+    width: 98vw;
+    padding: 10px;
+    margin-top: 20%;
+  }
+
+  .header {
+    margin-bottom: 10px;
+  }
+
+  .form-logo {
+    width: 60px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .btn-previous, .btn-next, .btn-submit {
+    width: 90px;
+    height: 45px;
+    font-size: 12px;
+  }
+
+  .btn-submit {
+    width: 110px;
+  }
+
+  select, input, textarea {
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+}
+
+.checkbox-label {
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  background: #b22222;
+  border-color: #b22222;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.checkbox-label input[type="checkbox"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  outline: none;
+}
+
+.thank-you-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* From https://css.glass */
+background: rgba(255, 255, 255, 0);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: rgb(99, 12, 12);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}

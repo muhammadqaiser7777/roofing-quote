@@ -1,0 +1,124 @@
+/* ---------- MAIN CONTAINER ---------- */
+.policies-container {
+  width: 100%;
+  padding: 2rem 0;
+  background: #246A73;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Marcellus', serif;
+  color: #160F29;
+}
+
+/* ---------- TABS WRAPPER ---------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* ---------- BUTTON STYLING ---------- */
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  color: #160F29;
+  border: 2px solid #d1d5db;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+  justify-content: center;
+}
+
+/* SVG icon */
+.tab-btn .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-btn .icon svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.3s ease;
+}
+
+.tab-btn .icon svg path {
+  fill: black;
+  transition: fill 0.3s ease;
+}
+
+.tab-btn.active .icon svg path {
+  fill: white;
+}
+
+/* Hover Effects */
+.tab-btn:hover {
+  background: #368F8B; /* Accent */
+  color: #ffffff;
+  border-color: #368F8B;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(54, 143, 139, 0.3);
+}
+
+.tab-btn:hover .icon svg {
+  transform: scale(1.2);
+}
+
+/* Active Button */
+.tab-btn.active {
+  background: #160F29; /* Primary */
+  color: #ffffff;
+  border-color: #160F29;
+  font-weight: 600;
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(22, 15, 41, 0.4);
+}
+.tab-btn.active .icon {
+  transform: scale(1.2);
+  color: #ffffff;
+}
+/* ---------- POLICY CONTENT ---------- */
+.policy-content {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(22, 15, 41, 0.1);
+  line-height: 1.7;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  min-height: 300px;
+}
+
+.policy-content:hover {
+  box-shadow: 0 6px 20px rgba(36, 106, 115, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .tab-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
