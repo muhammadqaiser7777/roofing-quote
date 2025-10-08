@@ -7,6 +7,7 @@ import { Contact } from './pages/contact/contact';
 import { Faq } from './pages/faq/faq';
 import { Form } from './pages/form/form';
 import { Policies } from './pages/policies/policies';
+import {MarketingPartners} from './pages/marketing-partners/marketing-partners';
 
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'faq', component: Faq },
   { path: 'form', component: Form },
   { path: 'policies', component: Policies },
+  { path: 'marketing-partners', component: MarketingPartners },
   { path: '**', redirectTo: '' }
 ];
 
