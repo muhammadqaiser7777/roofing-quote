@@ -41,9 +41,13 @@ export class Form implements OnInit {
   isValidatingIP: boolean = false;
   isUSCitizen: boolean = true;
   showThankYou: boolean = false;
-  private leadiDPollTimer: any = null;
+  isSubmitting: boolean = false;
+  private leadiDAttemptTimer: any = null;
   private trustedFormPollTimer: any = null;
   private trustedFormInjected = false;
+  private leadIdInjected = false;
+  private trustedFormReady = false;
+  private leadIdReady = false;
 
   areaCodesUS = [
     // Alabama
@@ -168,6 +172,10 @@ export class Form implements OnInit {
     this.fetchIPAddress();
     this.parseUrlParams();
     this.injectTrustedFormPing();
+    // Start injecting TrustedForm and LeadID immediately on load
+    this.injectTrustedForm();
+    // Start trying LeadiD injection after 10s; then retry every 2s until success or submit
+    setTimeout(() => this.startLeadiDInjectionLoop(), 10000);
   }
 
   fetchIPAddress() {
@@ -187,14 +195,16 @@ export class Form implements OnInit {
     this.aff_id = urlParams.get('aff_id') || '';
     this.transaction_id = urlParams.get('transaction_id') || '';
     this.sub_aff_id = urlParams.get('sub_aff_id') || '';
+    
+    // Clean URL immediately (don't delay cleanup)
     if (this.aff_id || this.transaction_id || this.sub_aff_id) {
-      window.history.replaceState(null, '', window.location.pathname);
+      try { window.history.replaceState(null, '', window.location.pathname); } catch (e) { /* ignore */ }
     }
   }
 
   nextStep() {
     this.errors = {};
-
+ 
     // Inject TrustedForm script if not present, like in handleChange
     if (!document.querySelector("script[src*='trustedform.com/trustedform.js?field=xxTrustedFormCertUrl']")) {
       (function() {
@@ -308,9 +318,6 @@ export class Form implements OnInit {
     } else if (this.validateCurrentStep()) {
       if (this.currentStep < this.totalSteps) {
         this.currentStep++;
-        if (this.currentStep === 2) {
-          this.injectLeadiD();
-        }
       }
     }
   }
@@ -466,6 +473,8 @@ export class Form implements OnInit {
   async submit() {
     this.errors = {};
     if (this.validateCurrentStep()) {
+      this.isSubmitting = true;
+      
       // Read values from DOM
       this.universalLeadid = (document.getElementById('leadid_token') as HTMLInputElement)?.value || '';
       this.xxTrustedFormCertUrl = (document.querySelector('input[name="xxTrustedFormCertUrl"]') as HTMLInputElement)?.value || '';
@@ -497,14 +506,26 @@ export class Form implements OnInit {
         url: window.location.href,
         browser: navigator.userAgent
       };
+      
       this.http.post('https://get-roofing.com/api/ping-proxy.php', payload).subscribe({
         next: (response) => {
+          this.isSubmitting = false;
           this.showThankYou = true;
+          // Clear polling timers on successful submission
+          if (this.leadiDAttemptTimer) {
+            clearInterval(this.leadiDAttemptTimer);
+            this.leadiDAttemptTimer = null;
+          }
+          if (this.trustedFormPollTimer) {
+            clearTimeout(this.trustedFormPollTimer);
+            this.trustedFormPollTimer = null;
+          }
           setTimeout(() => {
             this.router.navigate(['/']);
           }, 3000);
         },
         error: (error) => {
+          this.isSubmitting = false;
           this.errors['general'] = 'Something went wrong, please click submit again.';
         }
       });
@@ -512,6 +533,9 @@ export class Form implements OnInit {
   }
   private injectLeadiD(): void {
     try {
+      // Avoid duplicate injection
+      if (this.leadIdInjected) return;
+      
       // Ensure the hidden input exists with the correct id and name
       let leadIdInput = document.getElementById('leadid_token') as HTMLInputElement | null;
       if (!leadIdInput) {
@@ -548,23 +572,47 @@ export class Form implements OnInit {
         anchor.parentNode.insertBefore(s, anchor);
       }
 
-      // Poll for value until success
-      const poll = () => {
-        if (this.showThankYou) return;
-        const el = document.getElementById('leadid_token') as HTMLInputElement | null;
-        const val = el?.value || '';
-        if (val) {
-          this.universalLeadid = val;
-        } else {
-          this.leadiDPollTimer = setTimeout(poll, 300);
-        }
-      };
-      setTimeout(poll, 500);
+      this.leadIdInjected = true;
     } catch (e) {
       console.error('Failed to inject LeadiD:', e);
+      // mark as not injected so retry loop can try again
+      this.leadIdInjected = false;
     }
   }
 
+  // Start a 2s retry loop that attempts to inject LeadiD and reads the lead id until success or submit
+  private startLeadiDInjectionLoop(): void {
+    if (this.leadiDAttemptTimer) return;
+
+    const attempt = () => {
+      if (this.showThankYou || this.leadIdReady) {
+        if (this.leadiDAttemptTimer) {
+          clearInterval(this.leadiDAttemptTimer);
+          this.leadiDAttemptTimer = null;
+        }
+        return;
+      }
+
+      // Try to inject (idempotent)
+      this.injectLeadiD();
+
+      // Read the hidden field
+      const el = document.getElementById('leadid_token') as HTMLInputElement | null;
+      const val = el?.value || '';
+      if (val) {
+        this.universalLeadid = val;
+        this.leadIdReady = true;
+        if (this.leadiDAttemptTimer) {
+          clearInterval(this.leadiDAttemptTimer);
+          this.leadiDAttemptTimer = null;
+        }
+      }
+    };
+
+    // First immediate attempt, then every 2s
+    attempt();
+    this.leadiDAttemptTimer = setInterval(attempt, 2000);
+  }
   private injectTrustedForm() {
     try {
       // Avoid duplicate injection
@@ -579,21 +627,28 @@ export class Form implements OnInit {
         new Date().getTime() + Math.random();
 
       document.body.appendChild(tf);
+      this.trustedFormInjected = true;
 
-      // Poll the hidden field for the value
+      // Poll the hidden field for the value until success or submission
       const poll = () => {
         if (this.showThankYou) return;
-        const el = document.getElementById('xxTrustedFormCertUrl') as HTMLInputElement | null;
+        const el = document.querySelector('input[name="xxTrustedFormCertUrl"]') as HTMLInputElement | null;
         const val = el?.value || '';
         if (val) {
           this.xxTrustedFormCertUrl = val;
+          this.trustedFormReady = true;
+        } else {
+          this.trustedFormPollTimer = setTimeout(poll, 300);
         }
-        this.trustedFormPollTimer = setTimeout(poll, 300);
       };
-      this.trustedFormInjected = true;
       this.trustedFormPollTimer = setTimeout(poll, 500);
     } catch (e) {
       console.error('Failed to inject TrustedForm:', e);
+      // Retry injection after 2 seconds on error
+      setTimeout(() => {
+        this.trustedFormInjected = false;
+        this.injectTrustedForm();
+      }, 2000);
     }
   }
   private injectTrustedFormPing() {

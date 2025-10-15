@@ -1,6 +1,6 @@
 <div class="background"></div>
 <div class="form-container">
-  <form (ngSubmit)="submit()" #f="ngForm">
+  <form (ngSubmit)="submit()" (keydown.enter)="$event.preventDefault()" #f="ngForm">
   <div class="roof-form" [ngClass]="'step-' + currentStep">
     <div class="header">
       <img src="assets/images/form-logo.webp" alt="Form Logo" class="form-logo">
@@ -224,7 +224,10 @@
         <span *ngIf="isValidatingEmail || isValidatingZip || isValidatingIP">Validating...</span>
       </button>
       <button *ngIf="currentStep === totalSteps" type="button" (click)="previousStep()" class="btn-previous">Previous</button>
-      <button *ngIf="currentStep === totalSteps" type="submit" class="btn-submit" [disabled]="!isUSCitizen">Submit</button>
+      <button *ngIf="currentStep === totalSteps" type="submit" class="btn-submit" [disabled]="!isUSCitizen || isSubmitting">
+        <span *ngIf="!isSubmitting">Submit</span>
+        <span *ngIf="isSubmitting">Submitting...</span>
+      </button>
     </div>
   </div>
   </form>
