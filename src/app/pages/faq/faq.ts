@@ -22,7 +22,7 @@ export class Faq {
     },
     {
       question: 'Is my personal information safe?',
-      answer: 'Yes, we take privacy seriously. Your information is encrypted and only shared with licensed, insured contractors we have verified. We never sell your data to third parties.',
+      answer: 'Yes, we take privacy seriously. Your information is encrypted and only shared with trusted contractors we have verified.',
       isOpen: false
     },
     {
