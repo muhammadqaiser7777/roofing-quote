@@ -293,28 +293,30 @@ export class Form implements OnInit {
         });
       }
     } else if (this.currentStep === 8) {
-      this.isValidatingIP = true;
-      this.http.get(`https://ipapi.co/${this.ipaddress}/json/`).subscribe({
-        next: (data: any) => {
-          this.isUSCitizen = data.country === "US";
-          this.isValidatingIP = false;
-          // Data captured logged
-          if (this.currentStep < this.totalSteps) {
-            this.currentStep++;
+      if (this.validateCurrentStep()) {
+        this.isValidatingIP = true;
+        this.http.get(`https://ipapi.co/${this.ipaddress}/json/`).subscribe({
+          next: (data: any) => {
+            this.isUSCitizen = data.country === "US";
+            this.isValidatingIP = false;
+            // Data captured logged
+            if (this.currentStep < this.totalSteps) {
+              this.currentStep++;
+            }
+            if (!this.isUSCitizen) {
+              this.errors['general'] = 'This service is only for US citizens.';
+            }
+          },
+          error: () => {
+            this.isUSCitizen = true;
+            this.isValidatingIP = false;
+            // Data captured logged - error case
+            if (this.currentStep < this.totalSteps) {
+              this.currentStep++;
+            }
           }
-          if (!this.isUSCitizen) {
-            this.errors['general'] = 'This service is only for US citizens.';
-          }
-        },
-        error: () => {
-          this.isUSCitizen = true;
-          this.isValidatingIP = false;
-          // Data captured logged - error case
-          if (this.currentStep < this.totalSteps) {
-            this.currentStep++;
-          }
-        }
-      });
+        });
+      }
     } else if (this.validateCurrentStep()) {
       if (this.currentStep < this.totalSteps) {
         this.currentStep++;
