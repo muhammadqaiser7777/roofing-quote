@@ -13,7 +13,7 @@ export class MarketingPartners {
     "5 Mile Media", "800Medigap", "ABC Leads", "ADT Solar", "Admaric", "Admediary", "Adopt-a-Contractor",
     "Adsparkx", "AdvertisingResults.com", "AgedLeadStore.com", "AHCPAIGAll Digital Promotions",
     "All Directions Express", "Alphatech Resource Holdings s.r.o.", "Ambient Home Solutions",
-    "American Classified Services, Inc.", "Apollo Interactives", "Aptive – Calls", "ArcadeYum LLC", "Astoria",
+    "American Classified Services, Inc.", "Apollo Interactive, LLC", "Aptive – Calls", "ArcadeYum LLC", "Astoria",
     "BBRS Group", "Benefit Advisors", "BenefitLogix", "BestQuotesBetter PPC", "BLX",
     "BlueWing Ads", "Bold Media Group", "BPODKS Marketing", "BuyerLink", "C3 Data, LLC", "Cadence Media Partners",
     "Call Center Partnerships", "Cedar Tree Media", "Cege Media", "Chain Effect Ads",
