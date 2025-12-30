@@ -303,9 +303,6 @@ export class Form implements OnInit {
             if (this.currentStep < this.totalSteps) {
               this.currentStep++;
             }
-            if (!this.isUSCitizen) {
-              this.errors['general'] = 'This service is only for US citizens.';
-            }
           },
           error: () => {
             this.isUSCitizen = true;
