@@ -224,7 +224,7 @@
         <span *ngIf="isValidatingEmail || isValidatingZip || isValidatingIP">Validating...</span>
       </button>
       <button *ngIf="currentStep === totalSteps" type="button" (click)="previousStep()" class="btn-previous">Previous</button>
-      <button *ngIf="currentStep === totalSteps" type="submit" class="btn-submit" [disabled]="!isUSCitizen || isSubmitting">
+      <button *ngIf="currentStep === totalSteps" type="submit" class="btn-submit" [disabled]="isSubmitting">
         <span *ngIf="!isSubmitting">Submit</span>
         <span *ngIf="isSubmitting">Submitting...</span>
       </button>
